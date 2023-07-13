@@ -23,6 +23,9 @@ const TOUCHABLE_ELEMENTS = [
   'TouchableNativeFeedback',
 ];
 
+
+
+
 export default class ModalDropdown extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
@@ -103,7 +106,8 @@ export default class ModalDropdown extends Component {
     onDropdownWillShow: PropTypes.func,
     onDropdownWillHide: PropTypes.func,
     onSelect: PropTypes.func,
-    numberOfLines: PropTypes.number
+    numberOfLines: PropTypes.number,
+    isRequired: PropTypes.bool
   };
 
   static defaultProps = {
@@ -123,7 +127,8 @@ export default class ModalDropdown extends Component {
     renderRowComponent: Platform.OS === 'ios' ? TouchableOpacity : TouchableHighlight,
     renderButtonComponent: TouchableOpacity,
     renderRightComponent: View,
-    numberOfLines: 1
+    numberOfLines: 1,
+    isRequired: false
   };
 
   constructor(props) {
@@ -243,6 +248,7 @@ export default class ModalDropdown extends Component {
       renderRightComponent,
       buttonAndRightComponentContainerStyle,
       numberOfLines,
+      isRequired
     } = this.props;
     const ButtonTouchable = renderButtonComponent;
     const RightComponent = renderRightComponent;
@@ -260,6 +266,7 @@ export default class ModalDropdown extends Component {
           <View style={[styles.button, buttonAndRightComponentContainerStyle]}>
             <Text style={[styles.buttonText, buttonTextStyle]} numberOfLines={numberOfLines}>
               {buttonText}
+          {isRequired &&   <Text style= {{color: 'red'}}>*</Text>} 
             </Text>
             <RightComponent />
           </View>
@@ -438,7 +445,7 @@ export default class ModalDropdown extends Component {
         style={styles.list}
         keyExtractor={(item, i) => (`key-${i}`)}
         renderItem={this._renderItem}
-        ItemSeparatorComponent={renderSeparator || this._renderSeparator}
+        // ItemSeparatorComponent={renderSeparator || this._renderSeparator}
         automaticallyAdjustContentInsets={false}
         showsVerticalScrollIndicator={showsVerticalScrollIndicator}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
